@@ -1,0 +1,53 @@
+@IoTDeviceApi_HostAddress = http://localhost:5000
+
+### GET Weather Forecast
+GET {{IoTDeviceApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+### GET Blobs
+GET {{IoTDeviceApi_HostAddress}}/api/storage/blob
+Accept: application/json
+
+### POST Blob
+POST {{IoTDeviceApi_HostAddress}}/api/storage/blob
+Content-Type: application/json
+
+{
+  "name": "sample-blob"
+}
+
+### GET Queues
+GET {{IoTDeviceApi_HostAddress}}/api/storage/queue
+Accept: application/json
+
+### POST Queue
+POST {{IoTDeviceApi_HostAddress}}/api/storage/queue
+Content-Type: application/json
+
+{
+  "name": "sample-message"
+}
+
+### GET Tables
+GET {{IoTDeviceApi_HostAddress}}/api/storage/table
+Accept: application/json
+
+### POST Table
+POST {{IoTDeviceApi_HostAddress}}/api/storage/table
+Content-Type: application/json
+
+{
+  "name": "sample-entity"
+}
+
+### GET File Shares
+GET {{IoTDeviceApi_HostAddress}}/api/storage/fileshare
+Accept: application/json
+
+### POST File Share
+POST {{IoTDeviceApi_HostAddress}}/api/storage/fileshare
+Content-Type: application/json
+
+{
+  "name": "sample-file"
+}
