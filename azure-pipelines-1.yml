@@ -15,15 +15,15 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-# Install NuGet
+# Step 1: Install NuGet
 - task: NuGetToolInstaller@1
 
-# Restore NuGet packages
+# Step 2: Restore NuGet packages
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
 
-# Build the solution and generate WebApp.zip
+# Step 3: Build the solution and generate WebApp.zip
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -36,25 +36,23 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-# Run tests
+# Step 4: Run tests
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-# Publish the build artifact
+# Step 5: Publish the build artifact
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(build.artifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# Deploy to Azure App Service
+# Step 6: Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azureservice'         # Your service connection name
     appType: 'webApp'
     appName: 'appservice'                     # Your App Service name
-    package: '$(System.DefaultWorkingDirectory)/drop/WebApp.zip'
-
-
+    package: '$(Pipeline.Workspace)/drop/WebApp.zip'
