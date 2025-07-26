@@ -5,38 +5,56 @@
 
 trigger:
 - main
+
 pool:
   vmImage: 'windows-latest'
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+
 steps:
+# Install NuGet
 - task: NuGetToolInstaller@1
+
+# Restore NuGet packages
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+
+# Build the solution and generate WebApp.zip
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    msbuildArgs: >
+      /p:DeployOnBuild=true 
+      /p:WebPublishMethod=Package 
+      /p:PackageAsSingleFile=true 
+      /p:SkipInvalidConfigurations=true 
+      /p:PackageLocation="$(build.artifactStagingDirectory)\WebApp.zip"
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+# Run tests
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-# Publish artifact
+
+# Publish the build artifact
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(build.artifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-# Deploy to Azure App Service (example)
+
+# Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'Azureservice'         # Use the service connection name
+    azureSubscription: 'Azureservice'         # Your service connection name
     appType: 'webApp'
-    appName: 'appservice'                     # Your App Service name from Azure portal
+    appName: 'appservice'                     # Your App Service name
     package: '$(System.DefaultWorkingDirectory)/drop/WebApp.zip'
+
 
