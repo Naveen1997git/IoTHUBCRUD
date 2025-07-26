@@ -52,7 +52,7 @@ steps:
 # Step 6: Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'Azureservice'         # Your service connection name
+    azureSubscription: 'Azureservice'
     appType: 'webApp'
-    appName: 'appservice'                     # Your App Service name
+    appName: 'appservice'
     package: '$(Pipeline.Workspace)/drop/WebApp.zip'
