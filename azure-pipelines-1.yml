@@ -49,7 +49,15 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# Step 6: Deploy to Azure App Service
+# Step 6: Download the artifact before deployment
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'drop'
+    downloadPath: '$(Pipeline.Workspace)'
+
+# Step 7: Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azureservice'
