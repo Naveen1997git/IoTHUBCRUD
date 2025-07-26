@@ -21,13 +21,16 @@ builder.Services.AddSingleton(new QueueServiceClient(builder.Configuration["Azur
 builder.Services.AddSingleton(new TableServiceClient(builder.Configuration["AzureStorage:Table"]));
 builder.Services.AddSingleton(new ShareServiceClient(builder.Configuration["AzureStorage:FileShare"]));
 
+
 var app = builder.Build();
 
-// ✅ Enable Swagger in all environments
-app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IoTDeviceApi v1"));
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IoTDeviceApi v1"));
+}
 
-app.UseHttpsRedirection();
+
 app.UseAuthorization();
 app.MapControllers();
 

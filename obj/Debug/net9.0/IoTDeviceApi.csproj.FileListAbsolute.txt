@@ -59,3 +59,4 @@ C:\Users\10762925\source\repos\AzureIOTHUb\IoTDeviceApi\obj\Debug\net9.0\refint\
 C:\Users\10762925\source\repos\AzureIOTHUb\IoTDeviceApi\obj\Debug\net9.0\IoTDeviceApi.pdb
 C:\Users\10762925\source\repos\AzureIOTHUb\IoTDeviceApi\obj\Debug\net9.0\IoTDeviceApi.genruntimeconfig.cache
 C:\Users\10762925\source\repos\AzureIOTHUb\IoTDeviceApi\obj\Debug\net9.0\ref\IoTDeviceApi.dll
+C:\Users\10762925\source\repos\AzureIOTHUb\IoTDeviceApi\obj\Debug\net9.0\IoTDeviceApi.sourcelink.json
