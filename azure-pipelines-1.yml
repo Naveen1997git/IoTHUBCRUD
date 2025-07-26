@@ -23,18 +23,14 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-# Step 3: Build the solution and generate WebApp.zip
-- task: VSBuild@1
+# Step 3: Publish the project to a folder
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: >
-      /p:DeployOnBuild=true 
-      /p:WebPublishMethod=Package 
-      /p:PackageAsSingleFile=true 
-      /p:SkipInvalidConfigurations=true 
-      /p:PackageLocation="$(build.artifactStagingDirectory)\WebApp.zip"
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
+    zipAfterPublish: true
+
 
 # Step 4: Run tests
 - task: VSTest@2
@@ -63,4 +59,5 @@ steps:
     azureSubscription: 'Azureservice'
     appType: 'webApp'
     appName: 'appservice'
-    package: '$(Pipeline.Workspace)/drop/WebApp.zip'
+    package: '$(Pipeline.Workspace)/drop/*.zip'
+
